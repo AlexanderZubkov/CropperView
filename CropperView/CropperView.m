@@ -16,6 +16,7 @@ static NSInteger const kCropperIndexDefault = -1;
 {
     @private
     id<ICropperCornerManager> _cropperCornerManager;
+    NSInteger currentCropperIndex;
 }
 
 @end
@@ -169,6 +170,7 @@ static NSInteger const kCropperIndexDefault = -1;
         case UIGestureRecognizerStateBegan:
         {
             cropperIndex = [_cropperCornerManager cornerIndexFromCGPoint:point];
+            currentCropperIndex = cropperIndex;
             
             for (id<ICropperCorner> cropperCorner in [_cropperCornerManager cropperCornersWithCornerMode:CropperCornerModeAll index:cropperIndex])
             {
@@ -182,7 +184,8 @@ static NSInteger const kCropperIndexDefault = -1;
             if (cropperIndex == kCropperIndexDefault)
             {
                 // cropper index 를 검사하여 Rect 겹치더라도 오류나지 않게 수정
-                cropperIndex = [_cropperCornerManager cornerIndexFromCGPoint:point];
+                //cropperIndex = [_cropperCornerManager cornerIndexFromCGPoint:point];
+                cropperIndex = currentCropperIndex;
             }
             
             CGPoint translate = [sender translationInView:[sender view]];
